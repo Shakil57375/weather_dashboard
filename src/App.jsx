@@ -1,8 +1,15 @@
-import "./index.css"
+import Header from "./Components/Header/Header";
+import WeatherBoard from "./Components/Weather/WeatherBoard";
+import "./index.css";
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline text-red-500">
-      Hello world!
-    </h1>
-  )
+    <div>
+      <Header />
+      <main className="bg-no-repeat bg-cover h-screen grid place-items-center">
+        <section>
+          <WeatherBoard/>
+        </section>
+      </main>
+    </div>
+  );
 }
