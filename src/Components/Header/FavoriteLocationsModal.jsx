@@ -1,16 +1,26 @@
+import { useContext } from "react";
+import { FavoriteContext } from "../../context";
+
 const FavoriteLocationsModal = () => {
+  const { favorites } = useContext(FavoriteContext);
   return (
     <div>
       <div className="max-w-xs py-4 bg-white rounded-md border-gray-500 absolute right-0 top-16 text-black shadow-lg ">
-					<h3 className="text-lg font-bold px-4">Favorite Locations</h3>
-					<ul className="space-y-2 mt-4 *:py-2 *:px-4 *:cursor-pointer">
-						<li className="hover:bg-gray-200">Dhaka</li>
-						<li className="hover:bg-gray-200">Rangpur</li>
-						<li className="hover:bg-gray-200">Europe</li>
-					</ul>
-				</div>
+        <h3 className="text-lg font-bold px-4">Favorite Locations</h3>
+        <ul className="space-y-2 mt-4 *:py-2 *:px-4 *:cursor-pointer">
+          {favorites.length > 0 ? (
+            favorites.map((favorite) => (
+              <li key={favorite.longitude} className="hover:bg-gray-200">
+                {favorite.location}
+              </li>
+            ))
+          ) : (
+            <p>No Fav location added</p>
+          )}
+        </ul>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default FavoriteLocationsModal
+export default FavoriteLocationsModal;

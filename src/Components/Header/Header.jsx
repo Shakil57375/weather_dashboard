@@ -2,8 +2,10 @@ import Favorite from "./Favorite";
 import Search from "./Search";
 import Logo from "./Logo";
 import FavoriteLocationsModal from "./FavoriteLocationsModal";
+import { useState } from "react";
 
 const Header = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div>
       <header className="fixed w-full top-0 z-50 bg-gradient-to-b from-black/60 to-black/0 pb-10">
@@ -11,10 +13,10 @@ const Header = () => {
           <Logo />
           <div className="flex items-center gap-4 relative">
             <Search />
-            <Favorite />
+            <Favorite onShow={() => setShowModal(!showModal)} />
+            {showModal && <FavoriteLocationsModal />}
           </div>
         </nav>
-		<FavoriteLocationsModal/>
       </header>
     </div>
   );
