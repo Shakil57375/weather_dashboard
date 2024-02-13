@@ -1,11 +1,10 @@
 import pinLocation from "../../assets/pin.svg"
-import cloud from "../../assets/cloud.svg"
 const WeatherHeadLine = () => {
   return (
     <div>
       <div>
         <div className="max-md:flex items-center justify-between md:-mt-10">
-          <img src={cloud} alt="cloud" />
+          <img src="./assets/cloud.svg" alt="cloud" />
           <div className="max-md:flex items-center max-md:space-x-4">
             <h1 className="text-[60px] lg:text-[80px] xl:text-[100px] leading-none md:mb-4">
               16°
