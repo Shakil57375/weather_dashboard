@@ -27,9 +27,7 @@ const useWeather = () => {
         message: "Fetching weather data",
       });
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=${
-          import.meta.env.VITE_WEATHER_API_KEY
-        }&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
       );
       if (!response.ok) {
         const errorMessage = `Fetching weather data failed : ${response.status}`;
@@ -64,9 +62,9 @@ const useWeather = () => {
 
   useEffect(() => {
     setLoading({
-        loading : true,
-        message : "Finding location..."
-    })
+      loading: true,
+      message: "Finding location...",
+    });
     navigator.geolocation.getCurrentPosition(function (position) {
       fetchWeatherData(position.coords.latitude, position.coords.longitude);
     });
@@ -75,7 +73,7 @@ const useWeather = () => {
     weatherData,
     error,
     loading,
-  }
+  };
 };
 
-export default useWeather
+export default useWeather;
