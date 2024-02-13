@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { LocationContext } from "../context";
 
 const useWeather = () => {
   const [weatherData, setWeatherData] = useState({
@@ -19,6 +20,8 @@ const useWeather = () => {
     message: "",
   });
   const [error, setError] = useState(null);
+  const { selectedLocation } = useContext(LocationContext);
+  console.log(selectedLocation);
   const fetchWeatherData = async (latitude, longitude) => {
     try {
       setLoading({
@@ -27,7 +30,9 @@ const useWeather = () => {
         message: "Fetching weather data",
       });
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${import.meta.env.VITE_WEATHER_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
+          import.meta.env.VITE_WEATHER_API_KEY
+        }&units=metric`
       );
       if (!response.ok) {
         const errorMessage = `Fetching weather data failed : ${response.status}`;

@@ -1,11 +1,15 @@
 import { useContext, useState } from "react";
 import search from "../../assets/search.svg";
+import { LocationContext } from "../../context";
+import { getLocationByName } from "../../data/location-data";
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const {setSelectedLocation} = useContext()
+  const { setSelectedLocation } = useContext(LocationContext);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(searchTerm);
+    const fetchedLocation = getLocationByName(searchTerm);
+    console.log(fetchedLocation);
+    setSelectedLocation(fetchedLocation);
   };
   return (
     <div>
