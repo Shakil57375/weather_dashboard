@@ -1,25 +1,66 @@
 import Header from "../Components/Header/Header";
 import WeatherBoard from "../Components/Weather/WeatherBoard";
 import "../index.css";
-import { FavoriteProvider, WeatherProvider } from "../provider";
-import LocationProvider from "../provider/LocationProvider";
+import { WeatherContext } from "../context";
+import { useContext, useEffect, useState } from "react";
+import Loader from "../Components/Loader/Loader";
+import ClearSkyImage from "../assets/backgrounds/clear-sky.jpg";
+import FewCloudsImage from "../assets/backgrounds/few-clouds.jpg";
+import MistImage from "../assets/backgrounds/mist.jpeg";
+import RainyDayImage from "../assets/backgrounds/rainy-day.jpg";
+import ScatterdCloudsImage from "../assets/backgrounds/scattered-clouds.jpg";
+import SnowImage from "../assets/backgrounds/sunny.jpg";
+import ThunderStormImage from "../assets/backgrounds/thunderstorm.jpg";
+import WinterImage from "../assets/backgrounds/winter.jpg";
 const Pages = () => {
+  const { weatherData, loading } = useContext(WeatherContext);
+  const [climateImage, setClimateImage] = useState();
+  function getBackgroundImage(climate) {
+    switch (climate) {
+      case "Rain":
+        return RainyDayImage;
+      case "Clouds":
+        return ScatterdCloudsImage;
+      case "Clear":
+        return ClearSkyImage;
+      case "Snow":
+        return SnowImage;
+      case "Thunder":
+        return ThunderStormImage;
+      case "Fog":
+        return WinterImage;
+      case "Haze":
+        return FewCloudsImage;
+      case "Mist":
+        return MistImage;
+      default:
+        return ClearSkyImage;
+    }
+  }
+  useEffect(() => {
+    const bgImage = getBackgroundImage(weatherData.climate);
+    setClimateImage(bgImage);
+  }, [weatherData.climate]);
   return (
     <div>
-      <LocationProvider>
-        <WeatherProvider>
-          <FavoriteProvider>
-            <div>
-              <Header />
-              <main className="bg-no-repeat bg-cover h-screen grid place-items-center">
-                <section>
-                  <WeatherBoard />
-                </section>
-              </main>
-            </div>
-          </FavoriteProvider>
-        </WeatherProvider>
-      </LocationProvider>
+      {loading.state ? (
+        <div className="bg-cover h-screen grid place-items-center">
+          <Loader />
+          <p>{loading.message}</p>
+        </div>
+      ) : (
+        <div
+          style={{ backgroundImage: `url('${climateImage}')` }}
+          className="bg-no-repeat bg-cover"
+        >
+          <Header />
+          <main className="bg-no-repeat bg-cover h-screen grid place-items-center">
+            <section>
+              <WeatherBoard />
+            </section>
+          </main>
+        </div>
+      )}
     </div>
   );
 };
